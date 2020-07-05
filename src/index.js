@@ -3,6 +3,8 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import logger from './logger'
 import user from './routes/user'
+import book from './routes/book'
+import order from './routes/order'
 import authentication from './routes/authentication'
 import createStore from './persistence/connection'
 
@@ -20,6 +22,8 @@ app.get('/', function (req, res) {
 
 app.use('/login', authentication)
 app.use('/user', user)
+app.use('/book', book)
+app.use('/orders', order)
 
 app.listen(port, ()=>{
   console.log(`Server running on Port:${port}`);

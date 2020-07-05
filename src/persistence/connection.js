@@ -7,6 +7,12 @@ module.exports = () => {
   });
 
   const Users = sequelize.import('./models/users')
+  const Books=sequelize.import('./models/books')
+  const Orders=sequelize.import('./models/orders')
 
-  return { Users }
+  return { 
+      Users,
+      Books,
+      Orders
+   }
 }

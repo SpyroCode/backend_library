@@ -11,22 +11,23 @@ router.use((req, res, next) => {
 
 
 router.post('/', async (req, res) => {
-  const { name, author,editorial, status, image } = req.body
-  logger.info(JSON.stringify({ name, author, editorial,status,image }))
-  if(name && author && editorial && status && image){
+  const { idBook, idUser,User,Title, status,fecha } = req.body
+  logger.info(JSON.stringify({ idUser,idBook,User,Title,status,fecha }))
+  if(idUser && idBook && User && Title && fecha && status){
     
     const store = req.app.get('store')
-    const result = await store.Books.create({
-      name,
-      author,
-      editorial,
+    const result = await store.Orders.create({
+      idBook,
+      idUser,
+      User,
+      Title,
       status,
-      image
+      fecha
     })
     res.send({ result })
     res.end()
   }else{
-        logger.error(`[CREATE BOOKS] No found data, name : ${name} ,author: ${author}, editorial: ${editorial},status : ${status},image : ${image}`)
+        logger.error(`[CREATE ORDERS] No found data, idBook: ${idBook},idUser:${idUser} ,user : ${User} ,Book: ${Title}, status: ${status},fecha : ${fecha}`)
         const message='Faltan datos'
         res.status(500).send({message})
         res.end()
@@ -35,8 +36,8 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const store = req.app.get('store')
-  const result = await store.Books.findAll({
-    attributes: ['id', 'name', 'author','editorial','status', 'image']
+  const result = await store.Orders.findAll({
+    attributes: ['id', 'idBook', 'idUser','User','Title', 'status','fecha']
   })
   if(result){
       
@@ -44,7 +45,7 @@ router.get('/', async (req, res) => {
       res.send({ result })
       res.end()
   }else{
-        logger.error(`[GET BOOKS] No found data`)
+        logger.error(`[GET ORDERS] No found data`)
         const message='No hay datos a mostrar'
         res.status(500).send({message})
         res.end()  
