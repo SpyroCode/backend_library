@@ -12,10 +12,11 @@ router.post('/', async (req, res) => {
     
     console.log(req)
     const { email, password } = req.body
+    const status='activo'
     if(email && password){
         const store = req.app.get('store')
         const user = await store.Users.findOne({
-            where: { email }
+            where: { email, status }
           })
         logger.info(`[getToken] email: ${email}`)
         if(user && (email === user.email && await compare(password, user.password))){
