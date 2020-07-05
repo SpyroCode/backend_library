@@ -10,6 +10,7 @@ router.use((req, res, next) => {
 
 
 
+const Sequelize = require('sequelize');
 router.post('/', async (req, res) => {
   const { name, author,editorial, status, image } = req.body
   logger.info(JSON.stringify({ name, author, editorial,status,image }))
@@ -35,7 +36,13 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const store = req.app.get('store')
+  const Op = Sequelize.Op;
   const result = await store.Books.findAll({
+    where: {
+      status: {
+        [Op.ne]: 'inactivo'
+      }
+    },
     attributes: ['id', 'name', 'author','editorial','status', 'image']
   })
   if(result){
@@ -49,6 +56,54 @@ router.get('/', async (req, res) => {
         res.status(500).send({message})
         res.end()  
   }
+})
+router.get('/:id', async (req, res) => {
+  
+  const id=req.params.id
+  
+  const store = req.app.get('store')
+  const result = await store.Books.findOne({
+    where: {
+      id      
+    },
+    attributes: ['id', 'name', 'author','editorial','status', 'image']
+  })
+  logger.info(JSON.stringify({ result }))
+  res.send({ result })
+  res.end()
+})
+
+router.post('/baja/:id', async (req, res) => {
+    const id=req.params.id
+    const status='inactivo'
+    const store = req.app.get('store')
+    const result = await store.Books.update(
+      {
+        status,
+      }, {
+        where: {
+          id
+          }
+    })
+    res.send({ result })
+    res.end()
+  
+})
+router.post('/activa/:id', async (req, res) => {
+  const id=req.params.id
+  const status='disponible'
+  const store = req.app.get('store')
+  const result = await store.Books.update(
+    {
+      status,
+    }, {
+      where: {
+        id
+        }
+  })
+  res.send({ result })
+  res.end()
+
 })
 
 module.exports = router

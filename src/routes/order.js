@@ -52,4 +52,43 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/:id', async (req, res) => {
+  const idUser=req.params.id
+  const store = req.app.get('store')
+  const result = await store.Orders.findAll({
+    where: {
+      idUser      
+    },
+    attributes: ['id', 'idBook', 'idUser','User','Title', 'status','fecha']
+  })
+  if(result){
+      
+      logger.info(JSON.stringify({ result }))
+      res.send({ result })
+      res.end()
+  }else{
+        logger.error(`[GET ORDERS] No found data`)
+        const message='No hay datos a mostrar'
+        res.status(500).send({message})
+        res.end()  
+  }
+})
+router.post('/update/:id/:status', async (req, res) => {
+  const id=req.params.id
+  const status=req.params.status
+  const store = req.app.get('store')
+  const result = await store.Orders.update(
+    {
+      status,
+    }, {
+      where: {
+        id
+        }
+  })
+  res.send({ result })
+  res.end()
+
+})
+
+
 module.exports = router

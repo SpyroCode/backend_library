@@ -12,20 +12,22 @@ router.post('/', async (req, res) => {
     
     console.log(req)
     const { email, password } = req.body
+    const status='activo'
     if(email && password){
         const store = req.app.get('store')
         const user = await store.Users.findOne({
-            where: { email }
+            where: { email, status }
           })
         logger.info(`[getToken] email: ${email}`)
         if(user && (email === user.email && await compare(password, user.password))){
             
             const tokenData = {
                 email: email,
+                name:user.name,
                 role: user.role
 
               }
-            const token=sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1h' })  
+            const token=sign(tokenData, process.env.JWT_SECRET, { expiresIn: '5h' })  
             //res.status(201).send(JSON.stringify(req.body, null, 2))
             logger.info(`[getToken] user found: ${JSON.stringify(tokenData)}`)
             res.status(201).send({ token})
