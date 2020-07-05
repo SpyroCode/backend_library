@@ -8,7 +8,7 @@ const router = express.Router()
 
 
 router.post('/', async (req, res) => {
-    //console.log(req.params)
+    console.log(req.params)
     
     console.log(req)
     const { email, password } = req.body
@@ -34,13 +34,15 @@ router.post('/', async (req, res) => {
             console.log(token);
         }else{
             logger.error(`[login] invalid credentials, email: ${email}, password: ${password}`)
-            res.status(500).send('Email o usuario incorrecto')
+            const message='Email o usuario incorrecto'
+            res.status(500).send({message})
             res.end()
         }
         
     }else{
         logger.error(`[login] No found data, email: ${email}, password: ${password}`)
-        res.status(500).send('Faltan datos')
+        const message='Faltan datos'
+        res.status(500).send({message})
         res.end()
     }
 })
