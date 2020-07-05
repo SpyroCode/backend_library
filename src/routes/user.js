@@ -61,7 +61,7 @@ router.get('/:id', async (req, res) => {
   res.end()
 })
 
-router.post('/:id', async (req, res) => {
+router.post('/baja/:id', async (req, res) => {
     const id=req.params.id
     const status='inactivo'
     const store = req.app.get('store')
@@ -76,6 +76,22 @@ router.post('/:id', async (req, res) => {
     res.send({ result })
     res.end()
   
+})
+router.post('/activa/:id', async (req, res) => {
+  const id=req.params.id
+  const status='activo'
+  const store = req.app.get('store')
+  const result = await store.Users.update(
+    {
+      status,
+    }, {
+      where: {
+        id
+        }
+  })
+  res.send({ result })
+  res.end()
+
 })
 
 module.exports = router
