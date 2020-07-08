@@ -23,13 +23,14 @@ router.post("/", async (req, res) => {
         email: email,
         name: user.name,
         role: user.role,
+        id:user.id
       };
       const token = sign(tokenData, process.env.JWT_SECRET, {
         expiresIn: "5h",
       });
       //res.status(201).send(JSON.stringify(req.body, null, 2))
       logger.info(`[getToken] user found: ${JSON.stringify(tokenData)}`);
-      res.status(201).send({ token });
+      res.status(201).send({ token, tokenData });
       res.end();
       //res.status(201).send(`${email}.jwt.${password}`)
       console.log(token);
