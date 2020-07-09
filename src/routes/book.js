@@ -60,7 +60,6 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   
   const id=req.params.id
-  
   const store = req.app.get('store')
   const result = await store.Books.findOne({
     where: {
