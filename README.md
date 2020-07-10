@@ -20,6 +20,7 @@ Dentro del repositorio contiene un archivo .sqlite para la base con registros de
 
 para Administrador usar desde el front:
 <!--Solo datos de pruebas estos se pueden modificar ya teniendo corriendo el servidor-->
+<!--Datos acceso para pruebas NOTA: no usar en producción--->
 ///Username: efren.almanza@gmail.com
 ///Password: qwerty
 
