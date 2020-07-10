@@ -62,7 +62,7 @@ En la Carpera /src es la raíz de la aplicación
 /routes
 index.js
 ```
-### Esta aplicacion aun no esta completa aun se puede mejora con esstas sugerencias
+### Esta aplicacion aun no esta completa aun se puede mejora con estas sugerencias
 ```
  1.-Verificar que Correo y userName ya exita en la base de datos anntes de crearlo
  ```
